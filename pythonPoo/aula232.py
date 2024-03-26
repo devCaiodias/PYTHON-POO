@@ -10,3 +10,20 @@
 
 class MeuError(Exception):
     pass
+
+class OrError(Exception):
+    pass
+
+def levantar():
+    exception_ = MeuError('My error')
+    raise exception_
+
+try:
+    levantar()
+    
+except (MeuError, ZeroDivisionError) as error:
+    print(error.__class__.__name__)
+    print(error)
+    print()
+    exception_ = OrError('Vou lança de novo')
+    raise exception_ from error
