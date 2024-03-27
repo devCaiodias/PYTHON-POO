@@ -16,6 +16,8 @@ class OrError(Exception):
 
 def levantar():
     exception_ = MeuError('My error')
+    exception_.add_note('Olha a nota 1')
+    exception_.add_note('vc errou isso ')
     raise exception_
 
 try:
@@ -26,4 +28,6 @@ except (MeuError, ZeroDivisionError) as error:
     print(error)
     print()
     exception_ = OrError('Vou lança de novo')
+    exception_.add_note('Mias uma nota')
+    exception_.__notes__ += error.__notes__.copy()
     raise exception_ from error
