@@ -49,8 +49,8 @@ class MyOpen:
         
         
         
-with MyOpen('C:\\Users\\caiod\\pythonPOO\\pythonPoo\\aula235.txt', 'w') as file:
+with MyOpen('C:\\Users\\caiod\\pythonPOO\\pythonPoo\\aula235\\aula235.txt', 'w') as file:
     file.write('Caio \n')
-    file.write('Vini \n',156)
+    file.write('Vini \n')
     file.write('Debora \n')
     print('WITH', file)
