@@ -34,9 +34,23 @@ class MyOpen:
         print('closing file')
         self._file.close()
         
+        # raise class_exception(*exception_.args).with_traceback(traceback_)
+        
+        # print(class_exception)
+        # print(exception_)
+        # print(traceback_)
+        
+        # exception_.add_note('Minha nota')
+        
+        # raise ConnectionError('N deu para  conectar')
+        
+        # return True # Tratei a exceção
+        
+        
+        
         
 with MyOpen('C:\\Users\\caiod\\pythonPOO\\pythonPoo\\aula235.txt', 'w') as file:
     file.write('Caio \n')
-    file.write('Vini \n')
+    file.write('Vini \n',156)
     file.write('Debora \n')
     print('WITH', file)
