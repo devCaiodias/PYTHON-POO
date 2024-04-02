@@ -23,13 +23,33 @@
 # sobre o porquê)."
 # — Tim Peters (CPython Core Developer)
 
+def meu_repr(self):
+    return f'{type(self).__name__}({self.__dict__})'
+class Meta(type):
+    def __new__(mcs, name, bases, dct):
+        print('MetaClass NEW')
+        cls = super().__new__(mcs, name, bases, dct)
+        cls.attr = 15644
+        cls.__repr__ = meu_repr
+        
+        if 'falar' not in cls.__dict__ or not callable(cls.__dict__['falar']):
+            raise NotImplementedError('Implemente o metado falar ')
+        return cls
 
-# Object acima
-# class Foo:
-#     pass
-
-
-Foo = type('Foo', (object), {})
-f = Foo()
-# print(isinstance(f, Foo))
-print(type(f))
+class Pessoa(metaclass=Meta):
+    # falar = 1553
+    def __new__(cls, *args, **kwargs):
+        print('Meu New')
+        instancia = super().__new__(cls)
+        return instancia
+    
+    def __init__(self, nome):
+        print('Meu Init')
+        self.nome = nome
+        
+    def falar(self):
+        print('Falando...')
+        
+p1 = Pessoa('Caio')
+print(p1.attr)
+print(p1)
