@@ -23,6 +23,9 @@
 # sobre o porquê)."
 # — Tim Peters (CPython Core Developer)
 
+from typing import Any
+
+
 def meu_repr(self):
     return f'{type(self).__name__}({self.__dict__})'
 class Meta(type):
@@ -35,6 +38,12 @@ class Meta(type):
         if 'falar' not in cls.__dict__ or not callable(cls.__dict__['falar']):
             raise NotImplementedError('Implemente o metado falar ')
         return cls
+    
+    def __call__(self, *args, **kwags):
+        instacia = super().__call__(*args, **kwags)
+        if 'nome' not in instacia.__dict__:
+            raise NotImplementedError('Crie o attr nome')
+        return instacia
 
 class Pessoa(metaclass=Meta):
     # falar = 1553
@@ -51,5 +60,3 @@ class Pessoa(metaclass=Meta):
         print('Falando...')
         
 p1 = Pessoa('Caio')
-print(p1.attr)
-print(p1)
