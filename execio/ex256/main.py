@@ -7,7 +7,7 @@ possa sacar/depositar nessa conta. Contas corrente tem um limite extra.
 Conta (ABC)
     ContaCorrente
     ContaPoupanca
-Pessoa (ABC)
+Pessoa
     Cliente
         Clente -> Conta
 Banco
