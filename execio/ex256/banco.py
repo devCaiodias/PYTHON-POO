@@ -30,20 +30,39 @@ class Banco:
             return True
         return False 
     
-    def autenticar(self, cliente, conta):
-        if conta.agencia in self.agencias:
+    def _checa_se_conta_e_do_cliente(self, cliente, conta):
+        if conta is cliente.conta:
             return True
         return False
     
-    # def __repr__(self):
-    #     class_name = type(self).__name__
-    #     attrs = f'({self.cliente!r}, {self.conta!r})'
-    #     return f'{class_name}{attrs}'
+    def autenticar(self, cliente: Pessoa.Cliente, conta: conta.Conta):
+        return self._checa_agencia(conta) and \
+            self._checa_cliente(cliente) and \
+                self._checa_contas(conta) and \
+                    self._checa_se_conta_e_do_cliente(cliente, conta)
+                
+    
+    def __repr__(self):
+        class_name = type(self).__name__
+        attrs = f'({self.agencias!r}, {self.clientes!r}, {self.contas!r})'
+        return f'{class_name}{attrs}'
         
         
 if __name__ == '__main__':
-    b1 = Banco()
-    # b1.cliente = Pessoa.Cliente('Caio', 15)
-    # b1.conta = conta.ContaCorrente(2211,3322, 0 , 0)
+    c1 = Pessoa.Cliente('Caio', 34)
+    c_Corrente1 = conta.ContaCorrente(1222,456,0,0)
+    c1.conta = c_Corrente1
     
-    print(b1)
+    c2 = Pessoa.Cliente('Vine', 24)
+    c_Poupanca2 = conta.ContaPoupanca(3322,1122,0)
+    c2.conta = c_Poupanca2
+    
+    
+    banco = Banco()
+    banco.clientes.extend([c1,c2])
+    banco.contas.extend([c_Corrente1, c_Poupanca2])
+    banco.agencias.extend([1222,3322])
+    
+    if banco.autenticar(c1, c_Corrente1):
+        c_Corrente1.depositar(100)
+        c_Corrente1.sacar(98)
