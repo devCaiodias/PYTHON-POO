@@ -10,9 +10,20 @@ from dataclasses import dataclass
 @dataclass
 class Pessoa:
     nome: str
-    idade: int
+    sobrenome: str
+    
+    @property
+    def nome_completo(self):
+        return f'{self.nome} {self.sobrenome}'
+    
+    @nome_completo.setter
+    def nome_completo(self, valor):
+        nome, *sobrenome = valor.split()
+        self.nome = nome
+        self.sobrenome = ' '.join(sobrenome)
     
 if __name__ == '__main__':
-    p1 = Pessoa('Caio', 15)
-    p2 = Pessoa('Vini', 15)
-    print(p1 == p2)
+    p1 = Pessoa('Caio','Dias')
+    p1.nome_completo = 'Vini Mendez de solza'
+    
+    print(p1.nome_completo)
