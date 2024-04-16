@@ -2,7 +2,7 @@
   "editor.hover.enabled": true,
   "workbench.startupEditor": "none",
   "explorer.compactFolders": false,
-  "workbench.colorTheme": "2077",
+  "workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
   "workbench.iconTheme": "material-icon-theme",
   "code-runner.executorMap": {
     "python": "clear ; python -u"
