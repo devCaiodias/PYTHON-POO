@@ -7,3 +7,27 @@
 # Link: https://pypdf2.readthedocs.io/en/3.0.0/
 # Ative seu ambiente virtual
 # pip install pypdf2
+from pathlib import Path
+import PyPDF2
+
+CAMINHO_PASTA = Path(__file__).parent
+CAMINHO_PDF = CAMINHO_PASTA / 'pdf'
+CAMINHOS_NOVOS = CAMINHO_PASTA / 'arquivos_novos'
+
+RELATORIO_BACEN = CAMINHO_PDF / 'R20230210.pdf'
+
+CAMINHOS_NOVOS.mkdir(exist_ok=True)
+
+reader = PyPDF2.PdfReader(RELATORIO_BACEN)
+
+# print(len(reader.pages))
+# for page in reader.pages:
+#     print(page)
+#     print()
+
+page0 = reader.pages[0]
+imagem0 = page0.images[0]
+
+# print(page0.extract_text())
+with open(CAMINHOS_NOVOS / imagem0.name, 'wb') as imagem:
+    imagem.write(imagem0.data)
