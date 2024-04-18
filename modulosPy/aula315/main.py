@@ -64,7 +64,7 @@ def make_chrome_browser(*options: str) -> webdriver.Chrome:
 
 
 if __name__ == '__main__':
-    TIME_TO_WAIT = 10
+    TIME_TO_WAIT = 30
     
     # Example
     # options = '--headless', '--disable-gpu',
@@ -80,8 +80,12 @@ if __name__ == '__main__':
             (By.NAME, 'q')
         )
     )
-    search_input.send_keys('Caio desenho')
+    search_input.send_keys('hello word')
     search_input.send_keys(Keys.ENTER)
+    
+    results = browser.find_element(By.ID, 'search')
+    links = results.find_elements(By.TAG_NAME, 'a')
+    links[0].click()
 
     # Dorme por 10 segundos
     sleep(TIME_TO_WAIT)
