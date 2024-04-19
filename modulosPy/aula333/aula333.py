@@ -17,7 +17,17 @@ ROOT_FOLDER = Path(__file__).parent
 WORKBOOK_PATH = ROOT_FOLDER / 'workbook.xlsx'
 
 workbook = Workbook()
-worksheet: Worksheet = workbook.active # type: ignore
+# worksheet: Worksheet = workbook.active # type: ignore
+
+# Nome para a planilha
+sheetnamess = 'Yuta'
+# Criou a planilha
+workbook.create_sheet(sheetnamess)
+# Selecionou a planilha
+worksheet: Worksheet = workbook[sheetnamess] # type: ignore
+
+# Remover uma planilha
+workbook.remove(workbook['Sheet'])
 
 # Criando os cabeçalhos
 worksheet.cell(1, 1, 'Name')
