@@ -42,3 +42,17 @@ for i, page in enumerate(reader.pages):
     with open(CAMINHOS_NOVOS / f'pages{i}.pdf', 'wb') as pdf:
             writer.add_page(page)
             writer.write(pdf)
+            
+merger = PyPDF2.PdfMerger()
+
+files = [ 
+    CAMINHOS_NOVOS / 'pages1.pdf',
+    CAMINHOS_NOVOS / 'pages0.pdf',
+    
+         ]
+
+for file in files:
+    merger.append(file)
+    
+merger.write(CAMINHOS_NOVOS / 'MERGER.pdf')
+merger.close()
