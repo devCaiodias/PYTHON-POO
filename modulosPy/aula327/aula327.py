@@ -29,5 +29,16 @@ page0 = reader.pages[0]
 imagem0 = page0.images[0]
 
 # print(page0.extract_text())
-with open(CAMINHOS_NOVOS / imagem0.name, 'wb') as imagem:
-    imagem.write(imagem0.data)
+# with open(CAMINHOS_NOVOS / imagem0.name, 'wb') as imagem:
+#     imagem.write(imagem0.data)
+    
+
+# writer.add_page(page0)
+
+
+
+for i, page in enumerate(reader.pages):
+    writer = PyPDF2.PdfWriter()
+    with open(CAMINHOS_NOVOS / f'pages{i}.pdf', 'wb') as pdf:
+            writer.add_page(page)
+            writer.write(pdf)
