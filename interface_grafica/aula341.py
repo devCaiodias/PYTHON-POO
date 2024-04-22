@@ -31,5 +31,4 @@ layout.addWidget(botao3, 3, 1, 1, 2)
 
 
 central_widget.show()  # Central widget entre na hierarquia e mostra sua janela
-
 app.exec() # Executa o lup da aplicação
