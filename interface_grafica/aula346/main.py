@@ -6,6 +6,10 @@ from variables import WINDOW_ICON_PATH
 from main_window import MainWindow
 
 if __name__ == '__main__':
+    # snake_case
+    # PascalCase
+    # camelCase
+    
     # Cria aplicação
     app = QApplication(sys.argv)
     window = MainWindow()
