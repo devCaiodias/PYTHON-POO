@@ -4,6 +4,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
         
+        
         # Configurando o layout basico
         self.cw = QWidget()
         self.vlayout = QVBoxLayout()
@@ -17,3 +18,6 @@ class MainWindow(QMainWindow):
         # Ultima coisa a fazer 
         self.adjustSize()
         self.setFixedSize(self.width(), self.height())
+    
+    def addWidgetToVLayout(self, widget: QWidget):
+        self.vlayout.addWidget(widget)
