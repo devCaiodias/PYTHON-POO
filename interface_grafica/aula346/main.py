@@ -1,5 +1,6 @@
 import sys
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QLineEdit, QTextEdit
+from display import Display
 from PySide6.QtGui import QIcon
 from variables import WINDOW_ICON_PATH
 
@@ -15,8 +16,14 @@ if __name__ == '__main__':
     window = MainWindow()
     
     # Definir o Icone
-    icon = QIcon(str(WINDOW_ICON_PATH))
+    icon = QIcon(str(WINDOW_ICON_PATH)) # type: ignore
     window.setWindowIcon(icon)
+    
+    # Display
+    display = Display()
+    display.setPlaceholderText('Number')
+    window.addWidgetToVLayout(display)
+    
     
     # Executa tudo
     window.adjustFixedSize()
