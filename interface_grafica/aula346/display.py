@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QLineEdit
-from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, SMALL_FONT_SIZE, MiNINUM_WIDTH
+from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, MiNINUM_WIDTH
 from PySide6.QtCore import Qt
 
 
