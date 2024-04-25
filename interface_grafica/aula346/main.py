@@ -6,11 +6,8 @@ from PySide6.QtWidgets import QLabel
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QLineEdit
 from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, MiNINUM_WIDTH
-
 from buttons import ButtonsGrid
-
 from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout
-
 
 # # Cria aplicação
 class MainWindow(QMainWindow):
@@ -75,7 +72,7 @@ if __name__ == '__main__':
     window.setWindowIcon(icon)
     
     # Infor
-    infor = Infor('2.0 ^ 10.0 = 1024') # type: ignore
+    infor = Infor('Sua conta') # type: ignore
     window.addWidgetToVLayout(infor)
     
     # Display
@@ -84,7 +81,7 @@ if __name__ == '__main__':
     window.addWidgetToVLayout(display)
     
     # Grid
-    buttonGrid = ButtonsGrid(display)
+    buttonGrid = ButtonsGrid(display, infor)
     window.vLayout.addLayout(buttonGrid)
     
     

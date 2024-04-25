@@ -3,6 +3,12 @@ from variables import MEDIUM_FONT_SIZE
 from util import isEmpty, isNumOrDot, isValidNumber
 from PySide6.QtCore import Slot
 
+from typing  import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from main import Display
+    from main import Infor
+
 class Button(QPushButton):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -19,7 +25,7 @@ class Button(QPushButton):
         
 
 class ButtonsGrid(QGridLayout):
-    def __init__(self, display, *args, **kwargs) -> None:
+    def __init__(self, display: 'Display', info: 'Infor',  *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         
         self._gridMask = [
@@ -30,7 +36,18 @@ class ButtonsGrid(QGridLayout):
             ['👨‍💻', '0', '.', '=' ],
         ]
         self.display = display
+        self.info = info
+        self._equation = ''
         self._maskGrid()
+        
+    @property
+    def equation(self):
+        return self._equation
+    
+    @equation.setter
+    def equation(self, valor):
+        self._equation = valor
+        self.info.setText(valor)
         
     
     def _maskGrid(self):
