@@ -7,7 +7,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QLineEdit
 from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, MiNINUM_WIDTH
 
-from buttons import Button
+from buttons import Button, ButtonsGrid
 
 from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout
 
@@ -83,9 +83,10 @@ if __name__ == '__main__':
     display.setPlaceholderText('Number')
     window.addWidgetToVLayout(display)
     
-    # Button
-    button = Button('Text button')
-    window.addWidgetToVLayout(button)
+    # Grid
+    buttonGrid = ButtonsGrid()
+    window.vLayout.addLayout(buttonGrid)
+    
     
     
     # Executa tudo
