@@ -7,7 +7,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QLineEdit
 from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, MiNINUM_WIDTH
 
-from buttons import Button, ButtonsGrid
+from buttons import ButtonsGrid
 
 from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout
 
