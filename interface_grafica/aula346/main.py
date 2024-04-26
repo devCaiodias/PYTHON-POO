@@ -85,7 +85,6 @@ if __name__ == '__main__':
     window.vLayout.addLayout(buttonGrid)
     
     
-    
     # Executa tudo
     window.adjustFixedSize()
     window.show()

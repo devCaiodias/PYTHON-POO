@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QPushButton, QGridLayout, QWidget
+from PySide6.QtWidgets import QPushButton, QGridLayout
 from variables import MEDIUM_FONT_SIZE
 from util import isEmpty, isNumOrDot, isValidNumber
 from PySide6.QtCore import Slot
@@ -38,6 +38,12 @@ class ButtonsGrid(QGridLayout):
         self.display = display
         self.info = info
         self._equation = ''
+        self._equationInitialValue = 'Sua conta'
+        self._left = None
+        self._right = None
+        self._op = None
+        
+        self.equation = self._equationInitialValue
         self._maskGrid()
         
     @property
@@ -74,6 +80,9 @@ class ButtonsGrid(QGridLayout):
             # slot = self._makeSlot(self._clear)
             self._connectButtonClick(button, self._clear)
             # button.clicked.connect(self._clear)
+            
+        if text in '+-/*':
+            self._connectButtonClick(button, self._makeSlot(self._operatoClicked, button))
         
     def _makeSlot(self, method, *args, **kargs):
         @Slot(bool)
@@ -90,4 +99,26 @@ class ButtonsGrid(QGridLayout):
         self.display.insert(textButton)
         
     def _clear(self):
+        self._left = None
+        self._right = None
+        self._op = None
+        self.equation = self._equationInitialValue
         self.display.clear()
+        
+    def _operatoClicked(self, button):
+        text = button.text() # +-/* (etec...)
+        displayText = self.display.text() # Deverá ser meu número _left
+        self._clear() # Limpa o display
+        
+        # Se a pessoa clicou no operador sem configurar qualquer numero
+        if not isValidNumber(displayText) and self._left is None:
+            print('N tem nada para colocar no valor da esquerda!')
+            return
+            
+            
+        # Se hover algo no número da esquerda n fazemos nada. Aquardaremos o número da direita
+        if self._left is None:
+            self._left = float(displayText)
+            
+        self._op = text
+        self.equation = f'{self._left} {self._op} ??'
