@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QPushButton, QGridLayout
 from variables import MEDIUM_FONT_SIZE
 from util import isEmpty, isNumOrDot, isValidNumber
 from PySide6.QtCore import Slot
+from math import pow
 
 from typing  import TYPE_CHECKING
 
@@ -81,7 +82,7 @@ class ButtonsGrid(QGridLayout):
             self._connectButtonClick(button, self._clear)
             # button.clicked.connect(self._clear)
             
-        if text in '+-/*':
+        if text in '+-/*^':
             self._connectButtonClick(button, self._makeSlot(self._operatoClicked, button))
             
         if text in '=':
@@ -135,14 +136,22 @@ class ButtonsGrid(QGridLayout):
         
         self._right = float(displayText)
         self.equation = f'{self._left} {self._op} {self._right}'
-        result = 0.0
+        result = 'error'
         
         try:
-            result = eval(self.equation)
+            if '^' in self.equation and self._left is not None:
+                result = pow(self._left, self._right)
+            else:
+                result = eval(self.equation)
         except ZeroDivisionError:
             print('Zero division Error')
+        except OverflowError:
+            print('Numero muito Grande')
             
         self.display.clear
         self.info.setText(f'{self.equation} = {result}')
         self.display.setText(str(result)) # type: ignore
         self._right = None
+        
+        if result == 'error':
+            self._left = None
