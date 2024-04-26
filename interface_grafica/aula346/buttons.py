@@ -83,6 +83,9 @@ class ButtonsGrid(QGridLayout):
             
         if text in '+-/*':
             self._connectButtonClick(button, self._makeSlot(self._operatoClicked, button))
+            
+        if text in '=':
+            self._connectButtonClick(button, self._eq)
         
     def _makeSlot(self, method, *args, **kargs):
         @Slot(bool)
@@ -122,3 +125,24 @@ class ButtonsGrid(QGridLayout):
             
         self._op = text
         self.equation = f'{self._left} {self._op} ??'
+
+    def _eq(self):
+        displayText = self.display.text()
+        
+        if not isValidNumber(displayText):
+            print('Sem nada para a direita')
+            return
+        
+        self._right = float(displayText)
+        self.equation = f'{self._left} {self._op} {self._right}'
+        result = 0.0
+        
+        try:
+            result = eval(self.equation)
+        except ZeroDivisionError:
+            print('Zero division Error')
+            
+        self.display.clear
+        self.info.setText(f'{self.equation} = {result}')
+        self.display.setText(str(result)) # type: ignore
+        self._right = None
