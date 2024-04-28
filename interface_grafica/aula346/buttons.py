@@ -8,6 +8,7 @@ from typing  import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from main import Display
+    from main import MainWindow
     from main import Infor
 
 class Button(QPushButton):
@@ -26,7 +27,7 @@ class Button(QPushButton):
         
 
 class ButtonsGrid(QGridLayout):
-    def __init__(self, display: 'Display', info: 'Infor',  *args, **kwargs) -> None:
+    def __init__(self, display: 'Display', info: 'Infor', window: 'MainWindow',  *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         
         self._gridMask = [
@@ -38,6 +39,7 @@ class ButtonsGrid(QGridLayout):
         ]
         self.display = display
         self.info = info
+        self.window = window
         self._equation = ''
         self._equationInitialValue = 'Sua conta'
         self._left = None
@@ -118,7 +120,7 @@ class ButtonsGrid(QGridLayout):
         
         # Se a pessoa clicou no operador sem configurar qualquer numero
         if not isValidNumber(displayText) and self._left is None:
-            print('N tem nada para colocar no valor da esquerda!')
+            self._showError('VOCÊ NÃO DIJITOU NADA.')
             return
             
             
@@ -157,3 +159,9 @@ class ButtonsGrid(QGridLayout):
         
         if result == 'error':
             self._left = None
+            
+    def _showError(self, text):
+        msgBox = self.window.mkeMsgBox()
+        msgBox.setText(text)
+        msgBox.setIcon(msgBox.Icon.Critical)
+        msgBox.exec()

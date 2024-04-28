@@ -7,7 +7,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QLineEdit
 from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, MiNINUM_WIDTH
 from buttons import ButtonsGrid
-from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout
+from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QMessageBox
 
 # # Cria aplicação
 class MainWindow(QMainWindow):
@@ -31,6 +31,9 @@ class MainWindow(QMainWindow):
     
     def addWidgetToVLayout(self, widget: QWidget):
         self.vLayout.addWidget(widget)
+        
+    def mkeMsgBox(self):
+        return QMessageBox(self)
      
         
 # Infor
@@ -81,7 +84,7 @@ if __name__ == '__main__':
     window.addWidgetToVLayout(display)
     
     # Grid
-    buttonGrid = ButtonsGrid(display, infor)
+    buttonGrid = ButtonsGrid(display, infor, window)
     window.vLayout.addLayout(buttonGrid)
     
     
