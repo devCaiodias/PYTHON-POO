@@ -30,7 +30,7 @@ class ButtonsGrid(QGridLayout):
         super().__init__(*args, **kwargs)
         
         self._gridMask = [
-            ['C', '◀', '^', '/'],
+            ['C', 'D', '^', '/'],
             ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
@@ -78,15 +78,17 @@ class ButtonsGrid(QGridLayout):
         text = button.text()
         
         if text == 'C':
-            # slot = self._makeSlot(self._clear)
             self._connectButtonClick(button, self._clear)
-            # button.clicked.connect(self._clear)
+            
+        if text in 'D':
+            self._connectButtonClick(button, self.display.backspace)
             
         if text in '+-/*^':
             self._connectButtonClick(button, self._makeSlot(self._operatoClicked, button))
             
         if text in '=':
             self._connectButtonClick(button, self._eq)
+            
         
     def _makeSlot(self, method, *args, **kargs):
         @Slot(bool)
