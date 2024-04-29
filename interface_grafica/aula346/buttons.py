@@ -57,9 +57,14 @@ class ButtonsGrid(QGridLayout):
     def equation(self, valor):
         self._equation = valor
         self.info.setText(valor)
-        
+    
+    def _vouApagarVc(self):
+        print('Enter pressionado. sinal emitido', type(self).__name__)    
+    
     
     def _maskGrid(self):
+        self.display.eqRequested.connect(self._vouApagarVc)
+        
         for rowNumber, row in enumerate(self._gridMask):
             for colunsNumber, button_text in enumerate(row):
                 button = Button(button_text)
@@ -82,13 +87,13 @@ class ButtonsGrid(QGridLayout):
         if text == 'C':
             self._connectButtonClick(button, self._clear)
             
-        if text in 'D':
+        if text == 'D':
             self._connectButtonClick(button, self.display.backspace)
             
         if text in '+-/*^':
             self._connectButtonClick(button, self._makeSlot(self._operatoClicked, button))
             
-        if text in '=':
+        if text == '=':
             self._connectButtonClick(button, self._eq)
             
         

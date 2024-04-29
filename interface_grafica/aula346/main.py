@@ -1,9 +1,9 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QKeyEvent
 from variables import WINDOW_ICON_PATH
 from PySide6.QtWidgets import QLabel
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import QLineEdit
 from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, MiNINUM_WIDTH
 from buttons import ButtonsGrid
@@ -49,6 +49,8 @@ class Infor(QLabel):
 
 # Display
 class Display(QLineEdit):
+    eqRequested = Signal()
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.configStyle()
@@ -59,7 +61,14 @@ class Display(QLineEdit):
         self.setMinimumWidth(MEDIUM_FONT_SIZE)
         self.setAlignment(Qt.AlignmentFlag.AlignCenter)
         
-
+    def keyPressEvent(self, event: QKeyEvent) -> None:
+        key = event.key()
+        KEYS = Qt.Key
+        
+        if key in [KEYS.Key_Enter, KEYS.Key_Return]:
+            print('Enter pressionado. sinal emitido', type(self).__name__)
+            self.eqRequested.emit()
+            return event.ignore()
 
 if __name__ == '__main__':
     # snake_case
