@@ -10,3 +10,5 @@ BIG_FONT_SIZE = 20
 MEDIUM_FONT_SIZE = 24
 SMALL_FONT_SIZE = 18
 MiNINUM_WIDTH = 800
+
+# Fim do Projeto da calculadora 

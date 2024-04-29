@@ -55,6 +55,7 @@ class Display(QLineEdit):
     clearPressed = Signal()
     inputPressed = Signal(str)
     operaitorPressed = Signal(str)
+    negativoNumber = Signal(str)
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -74,7 +75,8 @@ class Display(QLineEdit):
         isEnter = key in [KEYS.Key_Enter, KEYS.Key_Return]
         isDelete = key in [KEYS.Key_Backspace, KEYS.Key_Delete, KEYS.Key_D]
         isEsc = key in [KEYS.Key_Escape, KEYS.Key_C]  
-        isOperaito = key in [KEYS.Key_Plus, KEYS.Key_Minus, KEYS.Key_Slash, KEYS.Key_Asterisk, KEYS.Key_P]  
+        isOperaito = key in [KEYS.Key_Plus, KEYS.Key_Minus, KEYS.Key_Slash, KEYS.Key_Asterisk, KEYS.Key_P]
+        isNegativoNumber = key in [KEYS.Key_N]  
           
         if isEnter or text == '=':
             self.eqPressed.emit()
@@ -94,6 +96,7 @@ class Display(QLineEdit):
             self.operaitorPressed.emit(text)
             return event.ignore()
         
+        
         # N passar daqui se n tiver Texto
         if isEmpty(text):
             return event.ignore()
@@ -102,6 +105,9 @@ class Display(QLineEdit):
             self.inputPressed.emit(text)
             return event.ignore()
             
+        if isNegativoNumber:
+            self.negativoNumber.emit(text)
+            return event.ignore()
 
 if __name__ == '__main__':
     # snake_case
