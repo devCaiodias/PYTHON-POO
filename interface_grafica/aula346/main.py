@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QLineEdit
 from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, MiNINUM_WIDTH
 from buttons import ButtonsGrid
 from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QMessageBox
-from util import isEmpty
+from util import isEmpty, isNumOrDot
 
 # # Cria aplicação
 class MainWindow(QMainWindow):
@@ -53,6 +53,7 @@ class Display(QLineEdit):
     eqPressed = Signal()
     delPressed = Signal()
     clearPressed = Signal()
+    inputPressed = Signal(str)
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,21 +71,21 @@ class Display(QLineEdit):
         KEYS = Qt.Key
         
         isEnter = key in [KEYS.Key_Enter, KEYS.Key_Return]
-        isDelete = key in [KEYS.Key_Backspace, KEYS.Key_Delete]
-        isEsc = key in [KEYS.Key_Escape]  
+        isDelete = key in [KEYS.Key_Backspace, KEYS.Key_Delete, KEYS.Key_D]
+        isEsc = key in [KEYS.Key_Escape, KEYS.Key_C]  
           
-        if isEnter:
-            print('Enter pressionado. sinal emitido', type(self).__name__)
+        if isEnter or text == '=':
+            print(f'Enter {text} pressionado. sinal emitido', type(self).__name__)
             self.eqPressed.emit()
             return event.ignore()
         
         if isDelete:
-            print('Delete pressionado. sinal emitido', type(self).__name__)
+            print(f'Delete {text} pressionado. sinal emitido', type(self).__name__)
             self.delPressed.emit()
             return event.ignore()
         
         if isEsc:
-            print('Esc pressionado. sinal emitido', type(self).__name__)
+            print(f'Esc {text} pressionado. sinal emitido', type(self).__name__)
             self.clearPressed.emit()
             return event.ignore()
         
@@ -92,8 +93,11 @@ class Display(QLineEdit):
         if isEmpty(text):
             return event.ignore()
         
-        print('Testo, ', text)
-        
+        if isNumOrDot(text):
+            print(f'inputPressed {text} pressionado. sinal emitido', type(self).__name__)
+            self.inputPressed.emit(text)
+            return event.ignore()
+            
 
 if __name__ == '__main__':
     # snake_case

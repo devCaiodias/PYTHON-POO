@@ -59,13 +59,14 @@ class ButtonsGrid(QGridLayout):
         self.info.setText(valor)
     
     def _vouApagarVc(self):
-        print('Enter pressionado. sinal emitido', type(self).__name__)    
+        print('Sinal pressionado. sinal emitido', type(self).__name__)    
     
     
     def _maskGrid(self):
-        self.display.eqPressed.connect(lambda: print('Enter pressionado. sinal emitido'))
-        self.display.delPressed.connect(lambda: print('Delete pressionado. sinal emitido'))
-        self.display.clearPressed.connect(lambda: print('Esc pressionado. sinal emitido'))
+        self.display.eqPressed.connect(self._vouApagarVc)
+        self.display.delPressed.connect(self.display.backspace)
+        self.display.clearPressed.connect(self._clear)
+        self.display.inputPressed.connect(self._vouApagarVc)
         
         for rowNumber, row in enumerate(self._gridMask):
             for colunsNumber, button_text in enumerate(row):
