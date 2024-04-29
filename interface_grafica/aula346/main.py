@@ -8,6 +8,7 @@ from PySide6.QtWidgets import QLineEdit
 from variables import BIG_FONT_SIZE, MEDIUM_FONT_SIZE, MiNINUM_WIDTH
 from buttons import ButtonsGrid
 from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QMessageBox
+from util import isEmpty
 
 # # Cria aplicação
 class MainWindow(QMainWindow):
@@ -49,7 +50,9 @@ class Infor(QLabel):
 
 # Display
 class Display(QLineEdit):
-    eqRequested = Signal()
+    eqPressed = Signal()
+    delPressed = Signal()
+    clearPressed = Signal()
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -62,13 +65,35 @@ class Display(QLineEdit):
         self.setAlignment(Qt.AlignmentFlag.AlignCenter)
         
     def keyPressEvent(self, event: QKeyEvent) -> None:
+        text = event.text().strip()
         key = event.key()
         KEYS = Qt.Key
         
-        if key in [KEYS.Key_Enter, KEYS.Key_Return]:
+        isEnter = key in [KEYS.Key_Enter, KEYS.Key_Return]
+        isDelete = key in [KEYS.Key_Backspace, KEYS.Key_Delete]
+        isEsc = key in [KEYS.Key_Escape]  
+          
+        if isEnter:
             print('Enter pressionado. sinal emitido', type(self).__name__)
-            self.eqRequested.emit()
+            self.eqPressed.emit()
             return event.ignore()
+        
+        if isDelete:
+            print('Delete pressionado. sinal emitido', type(self).__name__)
+            self.delPressed.emit()
+            return event.ignore()
+        
+        if isEsc:
+            print('Esc pressionado. sinal emitido', type(self).__name__)
+            self.clearPressed.emit()
+            return event.ignore()
+        
+        # N passar daqui se n tiver Texto
+        if isEmpty(text):
+            return event.ignore()
+        
+        print('Testo, ', text)
+        
 
 if __name__ == '__main__':
     # snake_case

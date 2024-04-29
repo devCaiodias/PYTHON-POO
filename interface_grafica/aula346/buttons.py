@@ -63,7 +63,9 @@ class ButtonsGrid(QGridLayout):
     
     
     def _maskGrid(self):
-        self.display.eqRequested.connect(self._vouApagarVc)
+        self.display.eqPressed.connect(lambda: print('Enter pressionado. sinal emitido'))
+        self.display.delPressed.connect(lambda: print('Delete pressionado. sinal emitido'))
+        self.display.clearPressed.connect(lambda: print('Esc pressionado. sinal emitido'))
         
         for rowNumber, row in enumerate(self._gridMask):
             for colunsNumber, button_text in enumerate(row):
