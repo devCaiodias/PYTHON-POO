@@ -58,16 +58,12 @@ class ButtonsGrid(QGridLayout):
         self._equation = valor
         self.info.setText(valor)
     
-    def _vouApagarVc(self, *args, **kwargs):
-        print('Sinal pressionado. sinal emitido', type(self).__name__, args, kwargs)    
-    
-    
     def _maskGrid(self):
-        self.display.eqPressed.connect(self._vouApagarVc)
+        self.display.eqPressed.connect(self._eq)
         self.display.delPressed.connect(self.display.backspace)
         self.display.clearPressed.connect(self._clear)
-        self.display.inputPressed.connect(self._vouApagarVc)
-        self.display.operaitorPressed.connect(self._vouApagarVc)
+        self.display.inputPressed.connect(self._insertToDisplay)
+        self.display.operaitorPressed.connect(self._configLeftOp)
         
         for rowNumber, row in enumerate(self._gridMask):
             for colunsNumber, button_text in enumerate(row):
@@ -78,7 +74,7 @@ class ButtonsGrid(QGridLayout):
                 
                 
                 self.addWidget(button, rowNumber, colunsNumber)
-                slotButton = self._makeSlot(self._insertButtonTextToDisplay,button,)
+                slotButton = self._makeSlot(self._insertToDisplay,button_text)
                 self._connectButtonClick(button,slotButton) # type: ignore
                 
                 
@@ -95,7 +91,7 @@ class ButtonsGrid(QGridLayout):
             self._connectButtonClick(button, self.display.backspace)
             
         if text in '+-/*^':
-            self._connectButtonClick(button, self._makeSlot(self._operatoClicked, button))
+            self._connectButtonClick(button, self._makeSlot(self._configLeftOp, text))
             
         if text == '=':
             self._connectButtonClick(button, self._eq)
@@ -107,14 +103,15 @@ class ButtonsGrid(QGridLayout):
             method(*args, **kargs)
         return realSlot
     
-    def _insertButtonTextToDisplay(self, button):
-        textButton = button.text()
-        newDisplayValue = self.display.text() + textButton
+    @Slot()
+    def _insertToDisplay(self, text):
+        newDisplayValue = self.display.text() + text
         
         if not isValidNumber(newDisplayValue):
             return
-        self.display.insert(textButton)
+        self.display.insert(text)
         
+    @Slot()
     def _clear(self):
         self._left = None
         self._right = None
@@ -122,8 +119,8 @@ class ButtonsGrid(QGridLayout):
         self.equation = self._equationInitialValue
         self.display.clear()
         
-    def _operatoClicked(self, button):
-        text = button.text() # +-/* (etec...)
+    @Slot()
+    def _configLeftOp(self, text):
         displayText = self.display.text() # Deverá ser meu número _left
         self._clear() # Limpa o display
         
@@ -140,6 +137,7 @@ class ButtonsGrid(QGridLayout):
         self._op = text
         self.equation = f'{self._left} {self._op} ??'
 
+    @Slot()
     def _eq(self):
         displayText = self.display.text()
         
