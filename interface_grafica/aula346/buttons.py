@@ -149,7 +149,7 @@ class ButtonsGrid(QGridLayout):
         
         # Se a pessoa clicou no operador sem configurar qualquer numero
         if not isValidNumber(displayText) and self._left is None:
-            self._showError('VOCÊ NÃO DIJITOU NADA.')
+            self._showError('VOCÊ NÃO DIGITOU NADA.')
             return
             
             

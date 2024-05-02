@@ -140,3 +140,6 @@ if __name__ == '__main__':
     window.adjustFixedSize()
     window.show()
     app.exec()
+    
+    # CAMINHO DA PASTA
+    # C:\Users\caiod\pythonPOO
